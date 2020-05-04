@@ -1,8 +1,7 @@
-type KeyChar = "Q" | "W" | "E" | "A" | "S" | "D" | "Z" | "X" | "C";
+type KeyChar = "q" | "w" | "e" | "a" | "s" | "d" | "z" | "x" | "c";
 
 export interface DrumPadData {
-    key: KeyChar;
-    keyCode: number;
-    id: string;
-    url: string;
+  key: KeyChar;
+  soundName: string;
+  url: string;
 }

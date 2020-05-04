@@ -5,7 +5,7 @@ export function arrayGroup<T>(arr: T[], num: number): T[][] {
 
   const output: T[][] = [];
 
-  for (let i: number = 0, len: number = arr.length; i < len; i += num) {
+  for (let i = 0, len: number = arr.length; i < len; i += num) {
     output.push(arr.slice(i, i + num));
   }
 

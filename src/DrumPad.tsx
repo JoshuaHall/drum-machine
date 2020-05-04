@@ -1,5 +1,7 @@
-import React from "react";
+import React, { ReactElement, useRef } from "react";
 import { DrumPadData } from "./DrumPadData";
+
+import useEventListener from "@srmagura/use-event-listener";
 
 interface DrumPadProps {
   data: DrumPadData;
@@ -7,57 +9,34 @@ interface DrumPadProps {
   volume: number;
 }
 
-class DrumPad extends React.Component<DrumPadProps, never> {
-  constructor(props: DrumPadProps) {
-    super(props);
+export function DrumPad({ data, updateDisplay, volume }: DrumPadProps): ReactElement {
+  const audioElem = useRef<HTMLAudioElement>(null);
 
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-    this.playSound = this.playSound.bind(this);
-  }
+  function playSound(): void {
+    if (audioElem.current !== null) {
+      audioElem.current.volume = volume;
+      audioElem.current.currentTime = 0;
 
-  componentDidMount() {
-    document.addEventListener("keydown", this.handleKeyPress);
-  }
+      audioElem.current.play();
 
-  componentWillUnmount() {
-    document.removeEventListener("keydown", this.handleKeyPress);
-  }
-
-  handleKeyPress(event: KeyboardEvent) {
-    if (event.keyCode === this.props.data.keyCode) {
-      this.playSound();
+      updateDisplay(data.soundName);
     }
   }
 
-  playSound() {
-    const audioElem: HTMLAudioElement = document.getElementById(
-      this.props.data.key
-    ) as HTMLAudioElement;
-
-    audioElem.volume = this.props.volume;
-    audioElem.currentTime = 0;
-
-    audioElem.play();
-
-    this.props.updateDisplay(this.props.data.id);
+  function handleKeyPress(event: KeyboardEvent): void {
+    if (event.key.toLowerCase() === data.key) {
+      playSound();
+    }
   }
 
-  render() {
-    return (
-      <div
-        onClick={this.playSound}
-        id={this.props.data.id}
-        className="drum-pad"
-      >
-        {this.props.data.key}
-        <audio
-          src={this.props.data.url}
-          id={this.props.data.key}
-          className="clip"
-        ></audio>
-      </div>
-    );
-  }
+  useEventListener("keydown", handleKeyPress);
+
+  const upperCaseKey = data.key.toUpperCase();
+
+  return (
+    <div onClick={playSound} id={data.soundName} className="drum-pad text-center">
+      {upperCaseKey}
+      <audio src={data.url} id={upperCaseKey} className="clip" ref={audioElem}></audio>
+    </div>
+  );
 }
-
-export default DrumPad;
