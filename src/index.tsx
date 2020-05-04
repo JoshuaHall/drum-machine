@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import "bulma/bulma.sass";
 import "./index.scss";
 
 import DrumMachine from "./DrumMachine";

@@ -99,7 +99,15 @@ export default function DrumMachine(): ReactElement {
       <div className="columns">
         <div className="column">
           <h2>Volume: {volume}</h2>
-          <input type="range" min={0} max={1} step={0.01} value={volume} onChange={handleVolumeChange} />
+          <input
+            className="slider"
+            type="range"
+            min={0}
+            max={1}
+            step={0.01}
+            value={volume}
+            onChange={handleVolumeChange}
+          />
         </div>
       </div>
     </div>
