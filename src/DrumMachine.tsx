@@ -75,14 +75,14 @@ export default function DrumMachine(): ReactElement {
   const drumPads = arrayGroup(drumPadData, 3).map((drumPads, index) => {
     const drumPadRowChildren = drumPads.map((padData) => {
       return (
-        <div className="col" key={padData.key}>
+        <div className="column" key={padData.key}>
           <DrumPad data={padData} updateDisplay={setSoundName} volume={volume} />
         </div>
       );
     });
 
     return (
-      <div className="row" key={index}>
+      <div className="columns" key={index}>
         {drumPadRowChildren}
       </div>
     );
@@ -90,14 +90,14 @@ export default function DrumMachine(): ReactElement {
 
   return (
     <div id="drum-machine" className="container">
-      <div className="row">
-        <div className="col">
+      <div className="columns">
+        <div className="column">
           <h2 id="display">Sound: {soundName}</h2>
         </div>
       </div>
       {drumPads}
-      <div className="row">
-        <div className="col">
+      <div className="columns">
+        <div className="column">
           <h2>Volume: {volume}</h2>
           <input type="range" min={0} max={1} step={0.01} value={volume} onChange={handleVolumeChange} />
         </div>

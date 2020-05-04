@@ -34,7 +34,7 @@ export function DrumPad({ data, updateDisplay, volume }: DrumPadProps): ReactEle
   const upperCaseKey = data.key.toUpperCase();
 
   return (
-    <div onClick={playSound} id={data.soundName} className="drum-pad text-center">
+    <div onClick={playSound} id={data.soundName} className="drum-pad has-text-centered">
       {upperCaseKey}
       <audio src={data.url} id={upperCaseKey} className="clip" ref={audioElem}></audio>
     </div>
