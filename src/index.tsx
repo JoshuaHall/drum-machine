@@ -4,14 +4,14 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.css";
 
-import { App } from "./App";
+import { DrumMachine } from "./DrumMachine";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const projectName = "drum-machine";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <DrumMachine />
   </React.StrictMode>,
   document.getElementById("root"),
 );

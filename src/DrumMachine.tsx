@@ -63,7 +63,7 @@ const drumPadData: [
   },
 ];
 
-export function App(): ReactElement {
+export function DrumMachine(): ReactElement {
   const [soundName, setSoundName] = useState("Play something to see the name of the sound!");
   const [volume, setVolume] = useState(1);
 
