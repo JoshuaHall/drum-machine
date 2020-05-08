@@ -1,7 +1,7 @@
-import React, { ReactElement, useRef } from "react";
-import { DrumPadData } from "./DrumPadData";
+import React, { ReactElement, useRef } from 'react';
+import { DrumPadData } from './DrumPadData';
 
-import useEventListener from "@srmagura/use-event-listener";
+import useEventListener from '@srmagura/use-event-listener';
 
 interface DrumPadProps {
   data: DrumPadData;
@@ -29,7 +29,7 @@ export function DrumPad({ data, updateDisplay, volume }: DrumPadProps): ReactEle
     }
   }
 
-  useEventListener("keydown", handleKeyPress);
+  useEventListener('keydown', handleKeyPress);
 
   const upperCaseKey = data.key.toUpperCase();
 

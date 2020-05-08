@@ -1,6 +1,6 @@
 export function arrayGroup<T>(arr: T[], num: number): T[][] {
   if (num <= 0) {
-    throw Error("group num should be greater than 0");
+    throw Error('group num should be greater than 0');
   }
 
   const output: T[][] = [];
