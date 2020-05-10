@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "author": {
-    "name": "Joshua Hall"
+    "name": "Joshua Hall",
+    "email": "joshuahallmail@gmail.com"
   },
   "main": "./src/DrumMachine.tsx",
   "dependencies": {
     "@srmagura/use-event-listener": "^0.2.1",
-    "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
     "bulma": "^0.8.2",
