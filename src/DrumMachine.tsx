@@ -89,7 +89,7 @@ export function DrumMachine(): ReactElement {
   });
 
   return (
-    <div id="drum-machine" className="container">
+    <div id="drum-machine">
       <div className="columns">
         <div className="column">
           <h2 id="display">Sound: {soundName}</h2>
