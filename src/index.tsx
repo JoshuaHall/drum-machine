@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 
 import './index.scss';
 
-import { DrumMachine } from './DrumMachine';
+import { DrumMachine, initDrumPadData, initVolume } from './DrumMachine';
 
 ReactDOM.render(
   <React.StrictMode>
-    <DrumMachine />
+    <DrumMachine initialVolume={initVolume} drumPadData={initDrumPadData} />
   </React.StrictMode>,
   document.getElementById('root'),
 );

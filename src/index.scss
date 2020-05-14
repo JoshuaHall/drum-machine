@@ -1,8 +1,10 @@
-@import "bulma";
-@import "bulma-slider";
+@import 'bulma';
+@import 'bulma-slider';
 
 .drum-pad {
-  margin: 3rem;
-  padding: 1rem;
-  border: 2px solid black;
+  width: 50px;
+}
+
+#drum-machine {
+  width: 300px;
 }

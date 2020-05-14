@@ -9,7 +9,7 @@ interface DrumPadProps {
   volume: number;
 }
 
-export function DrumPad({ data, updateDisplay, volume }: DrumPadProps): ReactElement {
+export function DrumPad({ data, updateDisplay, volume }: DrumPadProps): ReactElement<DrumPadProps> {
   const audioElem = useRef<HTMLAudioElement>(null);
 
   function playSound(): void {
@@ -24,6 +24,8 @@ export function DrumPad({ data, updateDisplay, volume }: DrumPadProps): ReactEle
   }
 
   function handleKeyPress(event: KeyboardEvent): void {
+    event.preventDefault();
+
     if (event.key.toLowerCase() === data.key) {
       playSound();
     }
@@ -34,9 +36,9 @@ export function DrumPad({ data, updateDisplay, volume }: DrumPadProps): ReactEle
   const upperCaseKey = data.key.toUpperCase();
 
   return (
-    <div onClick={playSound} id={data.soundName} className="drum-pad has-text-centered">
+    <button onClick={playSound} id={data.soundName} className="button drum-pad has-text-centered">
       {upperCaseKey}
       <audio src={data.url} id={upperCaseKey} className="clip" ref={audioElem}></audio>
-    </div>
+    </button>
   );
 }

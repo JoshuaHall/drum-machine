@@ -1,11 +1,11 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, ReactNode } from 'react';
 
 import { arrayGroup } from './arrayGroup';
 
 import { DrumPadData } from './DrumPadData';
 import { DrumPad } from './DrumPad';
 
-const drumPadData: [
+type DrumPadDataArr = [
   DrumPadData,
   DrumPadData,
   DrumPadData,
@@ -15,7 +15,11 @@ const drumPadData: [
   DrumPadData,
   DrumPadData,
   DrumPadData,
-] = [
+];
+
+export const initVolume = 1;
+
+export const initDrumPadData: DrumPadDataArr = [
   {
     key: 'q',
     soundName: 'Heater1',
@@ -63,53 +67,54 @@ const drumPadData: [
   },
 ];
 
-export function DrumMachine(): ReactElement {
+interface DrumMachineProps {
+  initialVolume: number;
+  drumPadData: DrumPadDataArr;
+}
+
+export function DrumMachine({ initialVolume, drumPadData }: DrumMachineProps): ReactElement<DrumMachineProps> {
   const [soundName, setSoundName] = useState('Play something to see the name of the sound!');
-  const [volume, setVolume] = useState(1);
+  const [volume, setVolume] = useState(initialVolume);
 
   function handleVolumeChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setVolume(parseFloat(event.target.value));
   }
 
   // Splits the drum pads into rows of three for the view
-  const drumPads = arrayGroup(drumPadData, 3).map((drumPads, index) => {
-    const drumPadRowChildren = drumPads.map((padData) => {
-      return (
-        <div className="column" key={padData.key}>
-          <DrumPad data={padData} updateDisplay={setSoundName} volume={volume} />
-        </div>
-      );
-    });
-
-    return (
-      <div className="columns" key={index}>
-        {drumPadRowChildren}
-      </div>
-    );
-  });
+  const drumPads = arrayGroup(drumPadData, 3).map((drumPads, i) => (
+    <MobileLevelWithItems key={i}>
+      {drumPads.map((padData) => (
+        <DrumPad key={padData.key} data={padData} updateDisplay={setSoundName} volume={volume} />
+      ))}
+    </MobileLevelWithItems>
+  ));
 
   return (
     <div id="drum-machine">
-      <div className="columns">
-        <div className="column">
-          <h2 id="display">Sound: {soundName}</h2>
-        </div>
-      </div>
+      <h2 id="display">
+        <strong>Sound:</strong> {soundName}
+      </h2>
+
+      <hr />
+
       {drumPads}
-      <div className="columns">
-        <div className="column">
-          <h2>Volume: {volume}</h2>
-          <input
-            className="slider"
-            type="range"
-            min={0}
-            max={1}
-            step={0.01}
-            value={volume}
-            onChange={handleVolumeChange}
-          />
-        </div>
-      </div>
+      <h2>Volume: {volume}</h2>
+      <input className="slider" type="range" min={0} max={1} step={0.01} value={volume} onChange={handleVolumeChange} />
+    </div>
+  );
+}
+
+interface MobileLevelWithItemsProps {
+  children: ReactNode;
+}
+
+// Takes its children and puts each one of them into a level-item inside of a level
+function MobileLevelWithItems({ children }: MobileLevelWithItemsProps): ReactElement<MobileLevelWithItemsProps> {
+  return (
+    <div className="level is-mobile">
+      {React.Children.map(children, (child) => (
+        <div className="level-item">{child}</div>
+      ))}
     </div>
   );
 }
