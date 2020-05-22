@@ -1,44 +1,55 @@
-import React, { ReactElement, useRef } from 'react';
-import { DrumPadData } from './DrumPadData';
+import React, { ReactElement, useRef, useCallback } from 'react';
+import type { KeyChar } from './DrumPadData';
 
 import useEventListener from '@srmagura/use-event-listener';
 
 interface DrumPadProps {
-  data: DrumPadData;
-  updateDisplay: (soundName: string) => void;
+  keyboardKey: KeyChar;
+  soundName: string;
+  url: string;
   volume: number;
+  updateDisplay: (soundName: string) => void;
 }
 
-export function DrumPad({ data, updateDisplay, volume }: DrumPadProps): ReactElement<DrumPadProps> {
+export const DrumPad = React.memo(function DrumPad({
+  keyboardKey,
+  soundName,
+  url,
+  volume,
+  updateDisplay,
+}: DrumPadProps): ReactElement<DrumPadProps> {
   const audioElem = useRef<HTMLAudioElement>(null);
 
-  function playSound(): void {
+  const playSound = useCallback((): void => {
     if (audioElem.current !== null) {
       audioElem.current.volume = volume;
       audioElem.current.currentTime = 0;
 
       audioElem.current.play();
 
-      updateDisplay(data.soundName);
+      updateDisplay(soundName);
     }
-  }
+  }, [soundName, updateDisplay, volume]);
 
-  function handleKeyPress(event: KeyboardEvent): void {
-    event.preventDefault();
+  const handleKeyPress = useCallback(
+    (event: KeyboardEvent): void => {
+      event.preventDefault();
 
-    if (event.key.toLowerCase() === data.key) {
-      playSound();
-    }
-  }
+      if (event.key.toLowerCase() === keyboardKey) {
+        playSound();
+      }
+    },
+    [keyboardKey, playSound],
+  );
 
   useEventListener('keydown', handleKeyPress);
 
-  const upperCaseKey = data.key.toUpperCase();
+  const upperCaseKey = keyboardKey.toUpperCase();
 
   return (
-    <button onClick={playSound} id={data.soundName} className="button drum-pad has-text-centered">
+    <button onClick={playSound} id={soundName} className="button drum-pad has-text-centered">
       {upperCaseKey}
-      <audio src={data.url} id={upperCaseKey} className="clip" ref={audioElem}></audio>
+      <audio src={url} id={upperCaseKey} className="clip" ref={audioElem}></audio>
     </button>
   );
-}
+});

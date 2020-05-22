@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, ReactNode } from 'react';
+import React, { ReactElement, useState, ReactNode, useCallback } from 'react';
 
 import { arrayGroup } from './arrayGroup';
 
@@ -21,47 +21,47 @@ export const initVolume = 1;
 
 export const initDrumPadData: DrumPadDataArr = [
   {
-    key: 'q',
+    keyboardKey: 'q',
     soundName: 'Heater1',
     url: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3',
   },
   {
-    key: 'w',
+    keyboardKey: 'w',
     soundName: 'Heater2',
     url: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3',
   },
   {
-    key: 'e',
+    keyboardKey: 'e',
     soundName: 'Heater3',
     url: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3',
   },
   {
-    key: 'a',
+    keyboardKey: 'a',
     soundName: 'Heater4',
     url: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3',
   },
   {
-    key: 's',
+    keyboardKey: 's',
     soundName: 'Clap',
     url: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3',
   },
   {
-    key: 'd',
+    keyboardKey: 'd',
     soundName: 'OpenHH',
     url: 'https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3',
   },
   {
-    key: 'z',
+    keyboardKey: 'z',
     soundName: 'Kick-n-Hat',
     url: 'https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3',
   },
   {
-    key: 'x',
+    keyboardKey: 'x',
     soundName: 'Kick',
     url: 'https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3',
   },
   {
-    key: 'c',
+    keyboardKey: 'c',
     soundName: 'ClosedHH',
     url: 'https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3',
   },
@@ -76,15 +76,15 @@ export function DrumMachine({ initialVolume, drumPadData }: DrumMachineProps): R
   const [soundName, setSoundName] = useState('Play something to see the name of the sound!');
   const [volume, setVolume] = useState(initialVolume);
 
-  function handleVolumeChange(event: React.ChangeEvent<HTMLInputElement>): void {
+  const handleVolumeChange = useCallback((event: React.ChangeEvent<HTMLInputElement>): void => {
     setVolume(parseFloat(event.target.value));
-  }
+  }, []);
 
   // Splits the drum pads into rows of three for the view
   const drumPads = arrayGroup(drumPadData, 3).map((drumPads, i) => (
     <MobileLevelWithItems key={i}>
       {drumPads.map((padData) => (
-        <DrumPad key={padData.key} data={padData} updateDisplay={setSoundName} volume={volume} />
+        <DrumPad key={padData.keyboardKey} {...padData} updateDisplay={setSoundName} volume={volume} />
       ))}
     </MobileLevelWithItems>
   ));
