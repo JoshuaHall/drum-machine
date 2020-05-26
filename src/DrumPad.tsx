@@ -33,9 +33,8 @@ export const DrumPad = React.memo(function DrumPad({
 
   const handleKeyPress = useCallback(
     (event: KeyboardEvent): void => {
-      event.preventDefault();
-
       if (event.key.toLowerCase() === keyboardKey) {
+        event.preventDefault();
         playSound();
       }
     },
