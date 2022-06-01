@@ -11,11 +11,11 @@
     "@srmagura/use-event-listener": "0.2.1",
     "bulma": "0.9.2",
     "bulma-slider": "2.0.4",
-    "react": "17.0.1",
+    "react": "18.1.0",
     "react-dom": "17.0.1"
   },
   "devDependencies": {
-    "@types/react": "17.0.2",
+    "@types/react": "18.0.10",
     "@types/react-dom": "17.0.1",
     "@typescript-eslint/eslint-plugin": "4.16.1",
     "@typescript-eslint/parser": "4.16.1",
